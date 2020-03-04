@@ -1,0 +1,25 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<!DOCTYPE plist PUBLIC "-//Apple//DTD PLIST 1.0//EN" "http://www.apple.com/DTDs/PropertyList-1.0.dtd">
+<plist version="1.0">
+<dict>
+    <key>Version</key>
+    <integer>1</integer>
+	<key>Extension Name</key>
+	<string>Eijirou</string>
+	<key>Extension Identifier</key>
+	<string>info.gucchi.popclip.extension.eijirou</string>
+	<key>Extension Description</key>
+	<string>Search in Eijirou for english.</string>
+	<key>Actions</key>
+	<array>
+		<dict>
+			<key>URL</key>
+			<string>https://eow.alc.co.jp/search?q={popclip text}</string>
+			<key>Image File</key>
+			<string>alc.png</string>
+			<key>Title</key>
+			<string>英辞郎</string>
+		</dict>
+	</array>
+</dict>
+</plist>
