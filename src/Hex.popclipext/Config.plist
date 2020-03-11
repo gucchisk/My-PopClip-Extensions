@@ -1,0 +1,39 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<!DOCTYPE plist PUBLIC "-//Apple//DTD PLIST 1.0//EN" "http://www.apple.com/DTDs/PropertyList-1.0.dtd">
+<plist version="1.0">
+  <dict>
+    <key>Version</key>
+    <integer>1</integer>
+    <key>Extension Name</key>
+    <string>HexString</string>
+    <key>Extension Identifier</key>
+    <string>info.gucchi.popclip.extension.hex</string>
+    <key>Extension Description</key>
+    <string>Convert string to hex string</string>
+    <key>Actions</key>
+    <array>
+      <dict>
+	<key>Title</key>
+	<string>Hex</string>
+	<key>After</key>
+	<string>paste-result</string>
+	<key>Script Interpreter</key>
+	<string>/usr/bin/perl</string>
+	<key>Shell Script File</key>
+	<string>tohex.pl</string>
+      </dict>
+      <dict>
+	<key>Regular Expression</key>
+	<string>^[A-Fa-f0-9]+$</string>
+	<key>Title</key>
+	<string>Str</string>
+	<key>After</key>
+	<string>paste-result</string>
+	<key>Script Interpreter</key>
+	<string>/usr/bin/perl</string>
+	<key>Shell Script File</key>
+	<string>fromhex.pl</string>
+      </dict>
+    </array>
+  </dict>
+</plist>
