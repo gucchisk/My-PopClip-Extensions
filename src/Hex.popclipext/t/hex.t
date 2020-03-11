@@ -1,4 +1,4 @@
-use Test::Simple tests => 10;
+use Test::More;
 use HexString;
 
 @test_data = (['hello', '68656c6c6f'],
@@ -12,3 +12,4 @@ foreach my $data (@test_data) {
     ok(HexString::fromHex(@$data[1]) eq @$data[0], "@${data[1]} - fromHex");
 }
 
+done_testing();
