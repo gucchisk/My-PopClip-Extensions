@@ -1,0 +1,4 @@
+#!/bin/bash
+
+cd $(dirname $0)/../src
+zip -r ../extensions/Exchange.popclipextz Exchange.popclipext --exclude \*/test/\*

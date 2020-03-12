@@ -4,22 +4,22 @@
 <dict>
     <key>Version</key>
     <integer>1</integer>
-	<key>Extension Name</key>
-	<string>Eijirou</string>
-	<key>Extension Identifier</key>
-	<string>info.gucchi.popclip.extension.eijirou</string>
-	<key>Extension Description</key>
-	<string>Search in Eijirou for english.</string>
-	<key>Actions</key>
-	<array>
-		<dict>
-			<key>URL</key>
-			<string>https://eow.alc.co.jp/search?q={popclip text}</string>
-			<key>Image File</key>
-			<string>alc.png</string>
-			<key>Title</key>
-			<string>英辞郎</string>
-		</dict>
-	</array>
+    <key>Extension Name</key>
+    <string>Eijirou</string>
+    <key>Extension Identifier</key>
+    <string>info.gucchi.popclip.extension.eijirou</string>
+    <key>Extension Description</key>
+    <string>Search in Eijirou for english.</string>
+    <key>Actions</key>
+    <array>
+      <dict>
+	<key>URL</key>
+	<string>https://eow.alc.co.jp/search?q={popclip text}</string>
+	<key>Image File</key>
+	<string>alc.png</string>
+	<key>Title</key>
+	<string>英辞郎</string>
+      </dict>
+    </array>
 </dict>
 </plist>
