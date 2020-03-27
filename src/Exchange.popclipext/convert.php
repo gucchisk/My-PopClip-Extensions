@@ -1,45 +1,67 @@
 <?php
 
-function getCode($mark) {
-	$currencyMap = [
-		'$' => 'USD',
-		'€' => 'EUR',
-		'¥' => 'JPY',
-		'£' => 'GBP',
-	];
-	return $currencyMap[$mark];
-}
+$MARKS = [
+  'JPY' => '¥',
+  'USD' => '$',
+  'EUR' => '€',
+  'GBP' => '£',
+  'AUD' => 'A$',
+  'CAD' => 'C$',
+  'NZD' => 'NZ$',
+  'CHF' => 'Fr',
+  'ZAR' => 'R',
+];
 
-function getMark($currency) {
-	$currencyMap = [
-		'JPY' => '¥',
-		'USD' => '$',
-		'EUR' => '€',
-		'GBP' => '£',
-	];
-	return $currencyMap[$currency];
-}
+$PREFIXES = [
+  'JPY' => ["¥", "￥"],
+  'USD' => ["^\\$", "US[D\$]"],
+  'EUR' => ["€"],
+  'GBP' => ["£"],
+  'AUD' => ["AU[D\$]", "^A\\$"],
+  'CAD' => ["CDN\\$", "CA[D\$]", "C\\$"],
+  'NZD' => ["NZ[D\$]"]
+];
+$SUFFIXES = [
+  'JPY' => ["円", "YEN"],
+  'USD' => ["ドル", "USD"],
+  'EUR' => ["ユーロ", "EUR"],
+  'GBP' => ["ポンド", "GBP"],
+];
 
 function getPatterns() {
-	$patterns = [
-		'USD' => ['/\$(\d+\.?\d*)/', '/(\d+)ドル/', '/(\d+)USD/'],
-		'EUR' => ['/€(\d+)/', '/(\d+)ユーロ/', '/(\d+)EUR/'],
-		'GBP' => ['/£(\d+)/', '/(\d+)ポンド/', '/(\d+)GBP/'],
-	];
-	return $patterns;
+  global $PREFIXES, $SUFFIXES;
+  $num = '(\d+\.?\d*)';
+	$patterns = [];
+  foreach ($PREFIXES as $currency => $prefixes) {
+    $patterns[$currency] = [];
+    foreach ($prefixes as $prefix) {
+      array_push($patterns[$currency], "/${prefix}${num}/i");
+    }
+    if (!array_key_exists($currency, $SUFFIXES)) {
+      continue;
+    }
+    foreach ($SUFFIXES[$currency] as $suffix) {
+      array_push($patterns[$currency], "/${num}${suffix}/i");
+    }
+  }
+ 	return $patterns;
 }
 
 function getRate($quotes, $from, $to) {
 	foreach ($quotes as $currency) {
 		if ($currency['currencyPairCode'] === "${from}${to}") {
-			return $currency['ask'];
+			return 1.0 * $currency['ask'];
 		}
+    if ($currency['currencyPairCode'] === "${to}${from}") {
+      return 1.0 / $currency['ask'];
+    }
 	}
 	return null;
 }
 
 function addMark($num, $currency) {
-	$mark = getMark($currency);
+  global $MARKS;
+	$mark = $MARKS[$currency];
 	return "${mark}${num}";
 }
 
@@ -51,20 +73,19 @@ class Converter
 		$this->json = json_decode($json_str, true);
 	}
 
-	function convert($str) {
+	function convert($str, $to) {
 		$str = str_replace(',', '', $str);
+    $str = str_replace(' ', '', $str);
 		$quotes = $this->json['quotes'];
-		$to_currency = 'JPY';
-    
 		$patterns = getPatterns();
 		foreach ($patterns as $currency => $patterns) {
 			foreach ($patterns as $pattern) {
 				$match = preg_match($pattern, $str, $matches);
 				if ($match) {
 					$current = $matches[1];
-					$rate = getRate($quotes, $currency, $to_currency);
+					$rate = getRate($quotes, $currency, $to);
 					$money = 1.0 * $current * $rate;
-					return addMark($money, $to_currency);
+					return addMark($money, $to);
 				}
 			}
 		}
