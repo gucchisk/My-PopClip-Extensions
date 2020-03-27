@@ -19,7 +19,9 @@ $PREFIXES = [
   'GBP' => ["£"],
   'AUD' => ["AU[D\$]", "^A\\$"],
   'CAD' => ["CDN\\$", "CA[D\$]", "C\\$"],
-  'NZD' => ["NZ[D\$]"]
+  'NZD' => ["NZ[D\$]"],
+  'CHF' => ["Fr"],
+  'ZAR' => ["^R"],
 ];
 $SUFFIXES = [
   'JPY' => ["円", "YEN"],
