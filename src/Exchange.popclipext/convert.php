@@ -85,8 +85,11 @@ class Converter
 				$match = preg_match($pattern, $str, $matches);
 				if ($match) {
 					$current = $matches[1];
+          if ($currency === $to) {
+            return addMark($current, $to);
+          }
 					$rate = getRate($quotes, $currency, $to);
-					$money = 1.0 * $current * $rate;
+					$money = floor(1.0 * $current * $rate * 100) / 100;
 					return addMark($money, $to);
 				}
 			}
@@ -95,9 +98,10 @@ class Converter
 	}
 }
 
+$currency=getenv('POPCLIP_OPTION_CURRENCY');
 if ($input = getenv('POPCLIP_TEXT')) {
 	$url = 'https://www.gaitameonline.com/rateaj/getrate';
 	$json_str = file_get_contents($url);
 	$converter = new Converter($json_str);
-	echo $converter->convert($input);
+	echo $converter->convert($input, $currency);
 }

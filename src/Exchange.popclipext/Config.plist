@@ -23,5 +23,28 @@
 	<string>convert.php</string>
       </dict>
     </array>
+    <key>Options</key>
+    <array>
+      <dict>
+	<key>Option Identifier</key>
+	<string>currency</string>
+	<key>Option Label</key>
+	<string>Currency</string>
+	<key>Option Type</key>
+	<string>multiple</string>
+	<key>Option Values</key>
+	<array>
+	  <string>JPY</string>
+	  <string>USD</string>
+	  <string>EUR</string>
+	  <string>GBP</string>
+	  <string>AUD</string>
+	  <string>CAD</string>
+	  <string>NZD</string>
+	  <string>CHF</string>
+	  <string>ZAR</string>
+	</array>
+      </dict>
+    </array>
   </dict>
 </plist>

@@ -22,7 +22,11 @@ EOL;
   {
     $this->converter = new Converter(self::$test_json);
   }
-    
+
+  public function testConvertUSDtoUSD() {
+    $this->assertSame('$100', $this->converter->convert('$100', 'USD'));
+  }
+
   public function testCovertUSDToJPY() {
     $this->assertSame('¥110', $this->converter->convert('$100', 'JPY'));
     $this->assertSame('¥110', $this->converter->convert('100ドル', 'JPY'));
@@ -30,6 +34,7 @@ EOL;
     $this->assertSame('¥110', $this->converter->convert('USD 100', 'JPY'));
     $this->assertSame('¥1100', $this->converter->convert('$1,000', 'JPY'));
     $this->assertSame('¥110.55', $this->converter->convert('$100.5', 'JPY'));
+    $this->assertSame('¥110.12', $this->converter->convert('$100.11', 'JPY'));
   }
 
   public function testConvertJPYToUSD() {
