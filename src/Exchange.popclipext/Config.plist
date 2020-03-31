@@ -13,8 +13,12 @@
     <key>Actions</key>
     <array>
       <dict>
+	<key>Regular Expression</key>
+	<string>^([$¥￥€R£]|USD|(AU|CDN|NZ|CA|[AC])\$|(AU|CA|NZ)D|Fr)*\s*\d[\d,.]*\s*(ドル|USD|円|YEN|yen|ユーロ|EUR|ポンド|GBP)?\s*$</string>
 	<key>Title</key>
-	<string>為替</string>
+	<string>💰</string>
+	<key>Image File</key>
+	<string>money-bag.png</string>
 	<key>After</key>
 	<string>preview-result</string>
 	<key>Script Interpreter</key>
