@@ -31,21 +31,21 @@ $SUFFIXES = [
 ];
 
 function getPatterns() {
-    global $PREFIXES, $SUFFIXES;
-    $num = '(\d+\.?\d*)';
+  global $PREFIXES, $SUFFIXES;
+  $num = '(\d+\.?\d*)';
 	$patterns = [];
-    foreach ($PREFIXES as $currency => $prefixes) {
-        $patterns[$currency] = [];
-        foreach ($prefixes as $prefix) {
-            array_push($patterns[$currency], "/${prefix}${num}/i");
-        }
-        if (!array_key_exists($currency, $SUFFIXES)) {
-            continue;
-        }
-        foreach ($SUFFIXES[$currency] as $suffix) {
-            array_push($patterns[$currency], "/${num}${suffix}/i");
-        }
+  foreach ($PREFIXES as $currency => $prefixes) {
+    $patterns[$currency] = [];
+    foreach ($prefixes as $prefix) {
+      array_push($patterns[$currency], "/${prefix}${num}/i");
     }
+    if (!array_key_exists($currency, $SUFFIXES)) {
+      continue;
+    }
+    foreach ($SUFFIXES[$currency] as $suffix) {
+      array_push($patterns[$currency], "/${num}${suffix}/i");
+    }
+  }
  	return $patterns;
 }
 
@@ -54,15 +54,15 @@ function getRate($quotes, $from, $to) {
 		if ($currency['currencyPairCode'] === "${from}${to}") {
 			return 1.0 * $currency['ask'];
 		}
-        if ($currency['currencyPairCode'] === "${to}${from}") {
-            return 1.0 / $currency['ask'];
-        }
+    if ($currency['currencyPairCode'] === "${to}${from}") {
+      return 1.0 / $currency['ask'];
+    }
 	}
 	return null;
 }
 
 function addMark($num, $currency) {
-    global $MARKS;
+  global $MARKS;
 	$mark = $MARKS[$currency];
 	return "${mark}${num}";
 }
@@ -77,7 +77,7 @@ class Converter
 
 	function convert($str, $to) {
 		$str = str_replace(',', '', $str);
-        $str = str_replace(' ', '', $str);
+    $str = str_replace(' ', '', $str);
 		$quotes = $this->json['quotes'];
 		$patterns = getPatterns();
 		foreach ($patterns as $currency => $patterns) {
@@ -85,9 +85,9 @@ class Converter
 				$match = preg_match($pattern, $str, $matches);
 				if ($match) {
 					$current = $matches[1];
-                    if ($currency === $to) {
-                        return addMark($current, $to);
-                    }
+          if ($currency === $to) {
+            return addMark($current, $to);
+          }
 					$rate = getRate($quotes, $currency, $to);
 					$money = floor(1.0 * $current * $rate * 100) / 100;
 					return addMark($money, $to);
